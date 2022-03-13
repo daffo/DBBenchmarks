@@ -1,6 +1,7 @@
 package com.daffo.DBBenchmarks.helpers;
 
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.Random;
 
 import com.daffo.DBBenchmarks.constants.Constants;
@@ -87,9 +88,13 @@ public class TestManager {
 	public void printResults() {
 		computeResults();
 		System.out.print("RESULTS:\n");
-		System.out.printf("Min exec time: %dns, achieved in iteration n %d\n", results.minTime, results.minTimeIteration + 1);
-		System.out.printf("Max exec time: %dns, achieved in iteration n %d\n", results.maxTime, results.maxTimeIteration + 1);
-		System.out.printf("Avg exec time: %dns\n", results.avgTime);
+		System.out.printf("Absolute min exec time: %dns\n", results.absMinTime);
+		System.out.printf("Absolute max exec time: %dns\n", results.absMaxTime);
+		System.out.printf("Absolute avg exec time: %dns\n", results.absAvgTime);
+		System.out.print("------\n");
+		System.out.printf("99percentile min exec time: %dns\n", results.nnpMinTime);
+		System.out.printf("99percentile max exec time: %dns\n", results.nnpMaxTime);
+		System.out.printf("99percentile avg exec time: %dns\n", results.nnpAvgTime);
 		System.out.print("------\n");
 	}
 
@@ -103,35 +108,45 @@ public class TestManager {
 	}
 
 	private void computeResults() {
-		for (int i = 0; i < results.times.length; i++) {
-			results.avgTime += results.times[i];
-			if (results.times[i] > results.maxTime) {
-				results.maxTime = results.times[i];
-				results.maxTimeIteration = i;
-			}
-			if (results.times[i] < results.minTime) {
-				results.minTime = results.times[i];
-				results.minTimeIteration = i;
-			}
+		Arrays.sort(results.times);
+		int l = results.times.length;
+		int nnp = l/100*99;
+		int gap = (l - nnp)/2;
+		results.absMinTime = results.times[0];
+		results.absMaxTime = results.times[l-1];
+		results.nnpMinTime = results.times[gap];
+		results.nnpMaxTime = results.times[l-gap];
+		for (int i = 0; i < gap; i++) {
+			results.absAvgTime += results.times[i];
 		}
-		results.avgTime /= results.times.length;
+		for (int i = gap; i < l - gap; i++) {
+			results.absAvgTime += results.times[i];
+			results.nnpAvgTime += results.times[i];
+		}
+		for (int i = l - gap; i < l; i++) {
+			results.absAvgTime += results.times[i];
+		}
+		results.absAvgTime /= l;
+		results.nnpAvgTime /= nnp;
 	}
 
 	private class TestResults {
 		private long[] times;
-		private long minTime;
-		private int minTimeIteration;
-		private long maxTime;
-		private int maxTimeIteration;
-		private long avgTime;
+		private long absMinTime;
+		private long absMaxTime;
+		private long absAvgTime;
+		private long nnpMinTime;
+		private long nnpMaxTime;
+		private long nnpAvgTime;
 
 		private TestResults(int iterations) {
 			times = new long[iterations];
-			minTime = Long.MAX_VALUE;
-			minTimeIteration = 0;
-			maxTime = Long.MIN_VALUE;
-			maxTimeIteration = 0;
-			avgTime = 0L;
+			absMinTime = Long.MAX_VALUE;
+			absMaxTime = Long.MIN_VALUE;
+			absAvgTime = 0L;
+			nnpMinTime = Long.MAX_VALUE;
+			nnpMaxTime = Long.MIN_VALUE;
+			nnpAvgTime = 0L;
 		}
 	}
 }
