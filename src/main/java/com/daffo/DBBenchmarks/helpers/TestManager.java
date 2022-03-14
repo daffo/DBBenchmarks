@@ -7,6 +7,7 @@ import java.util.Random;
 import com.daffo.DBBenchmarks.constants.Constants;
 import com.daffo.DBBenchmarks.constants.Queries;
 import com.daffo.DBBenchmarks.database.DBManager;
+import com.daffo.DBBenchmarks.database.DBManagerFactory;
 
 /**
  * Logic to run tests and collect relevant data
@@ -21,7 +22,7 @@ public class TestManager {
 		System.out.print("executing insert test\n");
 		results = new TestResults(Constants.INSERT_ITERATIONS);
 
-		DBManager dbManager = DBManager.getInstance();
+		DBManager dbManager = DBManagerFactory.getDBManagerInstance();
 		dbManager.initStatement(Queries.INSERT_INTO_TABLE);
 
 		for (int i = 0; i < Constants.INSERT_ITERATIONS; i++) {
@@ -44,7 +45,7 @@ public class TestManager {
 		System.out.print("executing select test\n");
 		results = new TestResults(Constants.SELECT_ITERATIONS);
 
-		DBManager dbManager = DBManager.getInstance();
+		DBManager dbManager = DBManagerFactory.getDBManagerInstance();
 		dbManager.initStatement(Queries.SELECT_FROM_TABLE);
 
 		int pkRange = Constants.INSERT_ITERATIONS * Constants.COMMIT_BATCH_SIZE * 2;
@@ -62,7 +63,7 @@ public class TestManager {
 		System.out.print("executing update test\n");
 		results = new TestResults(Constants.UPDATE_ITERATIONS);
 
-		DBManager dbManager = DBManager.getInstance();
+		DBManager dbManager = DBManagerFactory.getDBManagerInstance();
 		dbManager.initStatement(Queries.UPDATE_TABLE);
 
 		int pkRange = Constants.INSERT_ITERATIONS * Constants.COMMIT_BATCH_SIZE * 2;
@@ -110,12 +111,12 @@ public class TestManager {
 	private void computeResults() {
 		Arrays.sort(results.times);
 		int l = results.times.length;
-		int nnp = l/100*99;
-		int gap = (l - nnp)/2;
+		int nnp = l / 100 * 99;
+		int gap = (l - nnp) / 2;
 		results.absMinTime = results.times[0];
-		results.absMaxTime = results.times[l-1];
+		results.absMaxTime = results.times[l - 1];
 		results.nnpMinTime = results.times[gap];
-		results.nnpMaxTime = results.times[l-gap];
+		results.nnpMaxTime = results.times[l - gap];
 		for (int i = 0; i < gap; i++) {
 			results.absAvgTime += results.times[i];
 		}

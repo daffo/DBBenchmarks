@@ -2,8 +2,7 @@ package com.daffo.DBBenchmarks.helpers;
 
 import java.sql.SQLException;
 
-import com.daffo.DBBenchmarks.database.DBManager;
-
+import com.daffo.DBBenchmarks.database.DBManagerFactory;
 
 /**
  * Execute the benchmarks and visualize the results
@@ -13,8 +12,8 @@ import com.daffo.DBBenchmarks.database.DBManager;
  */
 public class BenchmarkExecutor {
 
-	public BenchmarkExecutor() throws Exception {
-		DBManager.getInstance().setupTable();
+	public BenchmarkExecutor() throws SQLException {
+		DBManagerFactory.getDBManagerInstance().setupTable();
 	}
 
 	public void run() throws SQLException {

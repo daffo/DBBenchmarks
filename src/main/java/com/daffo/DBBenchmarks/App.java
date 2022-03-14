@@ -1,7 +1,8 @@
 package com.daffo.DBBenchmarks;
 
-import com.daffo.DBBenchmarks.database.DBManager;
 import com.daffo.DBBenchmarks.helpers.BenchmarkExecutor;
+import com.daffo.DBBenchmarks.helpers.PropertiesManager;
+import com.daffo.DBBenchmarks.helpers.SystemExceptionHandler;
 
 /**
  * Entrypoint for DBBenchmarks tool
@@ -12,11 +13,10 @@ import com.daffo.DBBenchmarks.helpers.BenchmarkExecutor;
 public class App {
 	public static void main(String[] args) {
 		try {
+		PropertiesManager.getInstance().overrideProperties(args);
 			new BenchmarkExecutor().run();
 		} catch (Throwable e) {
-			System.out.println("Something went wrong: " + e.getMessage());
-			e.printStackTrace();
-			DBManager.getInstance().closeConnection();
+			SystemExceptionHandler.handleException(e);
 		}
 	}
 }

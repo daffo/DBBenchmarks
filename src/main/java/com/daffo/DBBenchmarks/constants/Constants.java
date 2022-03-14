@@ -1,6 +1,9 @@
 package com.daffo.DBBenchmarks.constants;
 
 public class Constants {
+	// system config
+	public static final String VERBOSE = "verbose";
+
 	// benchmark config
 	public static final String TABLE_NAME = "benchmarkTable";
 	public static final String TABLE_FIELD_ID = "id";
@@ -12,6 +15,7 @@ public class Constants {
 	public static final int COMMIT_BATCH_SIZE = 100;
 
 	// db connection
+	public static final String DB_TYPE_PROPERTY = "com.daffo.DBBenchmarks.DB_TYPE";
 	public static final String DB_SERVER_URL_PROPERTY = "com.daffo.DBBenchmarks.DB_SERVER_URL";
 	public static final String DB_SERVER_PORT_PROPERTY = "com.daffo.DBBenchmarks.DB_SERVER_PORT";
 	public static final String DB_SERVER_NAME_PROPERTY = "com.daffo.DBBenchmarks.DB_SERVER_NAME";
