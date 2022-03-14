@@ -23,3 +23,41 @@ Alternatively you can pass custom configuration parameters as input (i.e. `java 
  -u,--username <arg>    database username
  
  -v,--verbose           enable verbose logs
+
+ ##### Output example:
+ 
+```
+executing insert test
+end execution
+RESULTS:
+Absolute min exec time: 1035300ns
+Absolute max exec time: 32197200ns
+Absolute avg exec time: 1177160ns
+------
+99percentile min exec time: 1047000ns
+99percentile max exec time: 1785000ns
+99percentile avg exec time: 1142241ns
+------
+executing select test
+end execution
+RESULTS:
+Absolute min exec time: 26800ns
+Absolute max exec time: 6459400ns
+Absolute avg exec time: 41488ns
+------
+99percentile min exec time: 29400ns
+99percentile max exec time: 66300ns
+99percentile avg exec time: 41196ns
+------
+executing update test
+end execution
+RESULTS:
+Absolute min exec time: 1316000ns
+Absolute max exec time: 17859200ns
+Absolute avg exec time: 1594443ns
+------
+99percentile min exec time: 1422000ns
+99percentile max exec time: 2240500ns
+99percentile avg exec time: 1586981ns
+------
+ ```
