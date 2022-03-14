@@ -1,10 +1,11 @@
 package com.daffo.DBBenchmarks.database;
 
-import static com.daffo.DBBenchmarks.constants.Constants.DB_SERVER_NAME;
-import static com.daffo.DBBenchmarks.constants.Constants.DB_SERVER_PASSWORD;
-import static com.daffo.DBBenchmarks.constants.Constants.DB_SERVER_PORT;
-import static com.daffo.DBBenchmarks.constants.Constants.DB_SERVER_URL;
-import static com.daffo.DBBenchmarks.constants.Constants.DB_SERVER_USERNAME;
+import static com.daffo.DBBenchmarks.constants.Constants.DB_SERVER_NAME_PROPERTY;
+import static com.daffo.DBBenchmarks.constants.Constants.DB_SERVER_PASSWORD_PROPERTY;
+import static com.daffo.DBBenchmarks.constants.Constants.DB_SERVER_PORT_PROPERTY;
+import static com.daffo.DBBenchmarks.constants.Constants.DB_SERVER_URL_PROPERTY;
+import static com.daffo.DBBenchmarks.constants.Constants.DB_SERVER_USERNAME_PROPERTY;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -13,6 +14,7 @@ import java.sql.Statement;
 import java.util.concurrent.locks.ReentrantLock;
 
 import com.daffo.DBBenchmarks.constants.Queries;
+import com.daffo.DBBenchmarks.helpers.PropertiesManager;
 
 /**
  * Manage the interactions with the database
@@ -95,9 +97,11 @@ public class DBManager {
 
 	private void initConn() {
 		try {
+			PropertiesManager pm = PropertiesManager.getInstance();
 			conn = DriverManager.getConnection(
-					"jdbc:postgresql://" + DB_SERVER_URL + ":" + DB_SERVER_PORT + "/" + DB_SERVER_NAME,
-					DB_SERVER_USERNAME, DB_SERVER_PASSWORD);
+					"jdbc:postgresql://" + pm.getProperty(DB_SERVER_URL_PROPERTY) + ":"
+							+ pm.getProperty(DB_SERVER_PORT_PROPERTY) + "/" + pm.getProperty(DB_SERVER_NAME_PROPERTY),
+					pm.getProperty(DB_SERVER_USERNAME_PROPERTY), pm.getProperty(DB_SERVER_PASSWORD_PROPERTY));
 			conn.setAutoCommit(false);
 		} catch (SQLException e) {
 			throw new RuntimeException("unable to get db connection", e);

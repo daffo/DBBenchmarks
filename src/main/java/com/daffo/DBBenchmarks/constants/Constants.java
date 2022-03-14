@@ -12,9 +12,9 @@ public class Constants {
 	public static final int COMMIT_BATCH_SIZE = 100;
 
 	// db connection
-	public static final String DB_SERVER_URL = "localhost";
-	public static final String DB_SERVER_PORT = "5432";
-	public static final String DB_SERVER_NAME = "benchmark";
-	public static final String DB_SERVER_USERNAME = "postgres";
-	public static final String DB_SERVER_PASSWORD = "postgres";
+	public static final String DB_SERVER_URL_PROPERTY = "com.daffo.DBBenchmarks.DB_SERVER_URL";
+	public static final String DB_SERVER_PORT_PROPERTY = "com.daffo.DBBenchmarks.DB_SERVER_PORT";
+	public static final String DB_SERVER_NAME_PROPERTY = "com.daffo.DBBenchmarks.DB_SERVER_NAME";
+	public static final String DB_SERVER_USERNAME_PROPERTY = "com.daffo.DBBenchmarks.DB_SERVER_USERNAME";
+	public static final String DB_SERVER_PASSWORD_PROPERTY = "com.daffo.DBBenchmarks.DB_SERVER_PASSWORD";
 }
