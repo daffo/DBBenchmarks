@@ -12,7 +12,7 @@ Alternatively you can pass custom configuration parameters as input (i.e. `java 
 
 **usage:**
 
- -n,--dbname <arg>      database name
+ -n,--dbname <arg>      database name (supported values: mssql, postgres)
  
  -p,--password <arg>    database password
  
